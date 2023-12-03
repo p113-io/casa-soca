@@ -1,11 +1,8 @@
-import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import propTypes from 'prop-types';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import propTypes from "prop-types";
 
-import {
-  SwipeableDrawer,
-  SvgIcon
-} from '@mui/material';
+import { SwipeableDrawer, SvgIcon } from "@mui/material";
 
 import {
   Sheet,
@@ -14,133 +11,122 @@ import {
   ListItemButton,
   IconButton,
   ListItemContent,
-  Box
-} from '@mui/joy';
+  Box,
+} from "@mui/joy";
 
-import {
-  Menu as MenuIcon,
-  KeyboardArrowRight
-} from '@mui/icons-material';
+import { Menu as MenuIcon, KeyboardArrowRight } from "@mui/icons-material";
 
-import { ModeSwitcher } from '../Theme';
-import { ReactComponent as Logo } from '../assets/logo.svg';
+import { ModeSwitcher } from "../Theme";
+import Logo from "../assets/logo.svg";
 
 // css
 const css = {
-  "main": {
-    backgroundColor: 'transparent',
+  main: {
+    backgroundColor: "transparent",
   },
-  "logo": {
-    fontSize: 140, 
+  logo: {
+    fontSize: 140,
   },
-  "drawer": {
-    width: '100vw',
-    height: '100vh',
+  drawer: {
+    width: "100vw",
+    height: "100vh",
   },
-  "switchMode": {
-    cursor: 'pointer',
-    width: 'auto',
-    backgroundColor: 'transparent',
-    borderColor: 'unset',
-      '&:hover': {
-      backgroundColor: 'transparent',
-      borderColor: 'unset', 
+  switchMode: {
+    cursor: "pointer",
+    width: "auto",
+    backgroundColor: "transparent",
+    borderColor: "unset",
+    "&:hover": {
+      backgroundColor: "transparent",
+      borderColor: "unset",
     },
-    '&:focus': {
-      backgroundColor: 'transparent',
-      borderColor: 'unset',
-      outline: 'none !important',
-    }
-  }
+    "&:focus": {
+      backgroundColor: "transparent",
+      borderColor: "unset",
+      outline: "none !important",
+    },
+  },
 };
 
 ////////////////////
 // Menulist component
-// Require: 
+// Require:
 //   menu: an array
 //   toggleDrawer: a function
 //   navigate: a function
 // Render:
-//   MenuList component with menu items 
+//   MenuList component with menu items
 //   ModeSwitcher component for switching between light and dark
-//   Logo component for logo 
-//   Menu component for menu 
-//   Footer component for footer 
+//   Logo component for logo
+//   Menu component for menu
+//   Footer component for footer
 ////////////////////
 
-const MenuList = ({menu, toggleDrawer}) => {
+const MenuList = ({ menu, toggleDrawer }) => {
   const navigate = useNavigate();
   const handleClick = (path) => {
-    toggleDrawer(false)
+    toggleDrawer(false);
     navigate(path);
   };
 
   return (
-   <Box
-     sx={css.drawer}
-     role="presentation"
-     onClick={() => toggleDrawer(false)}
-     onKeyDown={() => toggleDrawer(false)}
-   >
-     <List>
-        <ListItem key={"logo"} >
-            <ListItemButton 
-              onClick={() => handleClick("/")}
-            >
-              <SvgIcon 
-                sx={css.logo} 
-                color="primary" 
-                component={Logo} 
-                inheritViewBox 
-              />
-            </ListItemButton>
-        </ListItem>
-       {menu?.length >0 && menu.map((m, i) => (
-        <ListItem key={"m"+i} >
-          <ListItemButton 
-            onClick={() => handleClick(m.path)}
-          >
-            <ListItemContent>{m.title}</ListItemContent>
-            <KeyboardArrowRight />
+    <Box
+      sx={css.drawer}
+      role="presentation"
+      onClick={() => toggleDrawer(false)}
+      onKeyDown={() => toggleDrawer(false)}
+    >
+      <List>
+        <ListItem key={"logo"}>
+          <ListItemButton onClick={() => handleClick("/")}>
+            <SvgIcon
+              sx={css.logo}
+              color="primary"
+              component={Logo}
+              inheritViewBox
+            />
           </ListItemButton>
         </ListItem>
-       ))}
-     </List>
-     <ModeSwitcher sx={{width: '100%'}}/>
-   </Box>
- )};
+        {menu?.length > 0 &&
+          menu.map((m, i) => (
+            <ListItem key={"m" + i}>
+              <ListItemButton onClick={() => handleClick(m.path)}>
+                <ListItemContent>{m.title}</ListItemContent>
+                <KeyboardArrowRight />
+              </ListItemButton>
+            </ListItem>
+          ))}
+      </List>
+      <ModeSwitcher sx={{ width: "100%" }} />
+    </Box>
+  );
+};
 
- // propTypes for MenuList
+// propTypes for MenuList
 MenuList.propTypes = {
   menu: propTypes.array,
-  toggleDrawer: propTypes.func
+  toggleDrawer: propTypes.func,
 };
 
 ////////////////////
-// Menu component 
+// Menu component
 // Require:
-//   menu: an array of menu items 
+//   menu: an array of menu items
 // Render:
 //   Menu component with menu items
 ////////////////////
 
-const Menu = ({menu}) => {
- const [open, setOpen] = useState(false);
- const anchor="left";
+const Menu = ({ menu }) => {
+  const [open, setOpen] = useState(false);
+  const anchor = "left";
 
- const toggleDrawer = (newOpen) => {
-  setOpen(newOpen);
- }
+  const toggleDrawer = (newOpen) => {
+    setOpen(newOpen);
+  };
 
   return (
-    <Sheet
-      sx={css.main}
-    >
-      <IconButton 
-        size="40"
-        variant="soft" 
-        onClick={() => toggleDrawer(true)}
-      >
+    <Sheet sx={css.main}>
+      <IconButton size="40" variant="soft" onClick={() => toggleDrawer(true)}>
         <MenuIcon />
       </IconButton>
       <SwipeableDrawer
@@ -149,15 +135,13 @@ const Menu = ({menu}) => {
         onClose={() => toggleDrawer(false)}
         onOpen={() => toggleDrawer(true)}
       >
-        <MenuList 
-          menu={menu} 
-          toggleDrawer={toggleDrawer} 
-        />
+        <MenuList menu={menu} toggleDrawer={toggleDrawer} />
       </SwipeableDrawer>
     </Sheet>
-  )
+  );
 };
-// propTypes for Menu 
+//
+// propTypes for Menu
 Menu.propTypes = {
   menu: propTypes.array.isRequired,
 };

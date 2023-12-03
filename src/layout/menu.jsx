@@ -17,8 +17,7 @@ import {
 import { Menu as MenuIcon, KeyboardArrowRight } from "@mui/icons-material";
 
 import { ModeSwitcher } from "../Theme";
-import Logo from "../assets/logo.svg";
-
+import Logo from "../assets/logo.svg?react";
 // css
 const css = {
   main: {

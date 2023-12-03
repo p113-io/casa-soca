@@ -19,7 +19,7 @@ import {
   Typography,
 } from "@mui/joy";
 import SvgIcon from "@mui/material/SvgIcon";
-import Logo from "../assets/logo.svg"; // Updated import statement
+import Logo from "../assets/logo.svg?react";
 import { ModeSwitcher } from "../Theme";
 import { useNavigate } from "react-router-dom";
 import { PropTypes } from "prop-types";
